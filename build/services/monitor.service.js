@@ -35,7 +35,7 @@ class MonitorService {
                 }
             });
             if (monitorOut == null) {
-                return yield (0, resp_1.default)(204, "Not found monitor");
+                return yield (0, resp_1.default)(404, "Not found monitor");
             }
             return yield (0, resp_1.default)(200, monitorOut);
         });
@@ -48,7 +48,7 @@ class MonitorService {
                 }
             });
             if (monitorOut == null) {
-                return yield (0, resp_1.default)(204, "Not found monitor");
+                return yield (0, resp_1.default)(404, "Not found monitor");
             }
             return yield (0, resp_1.default)(200, monitorOut);
         });
@@ -57,9 +57,26 @@ class MonitorService {
         return __awaiter(this, void 0, void 0, function* () {
             const monitors = yield this.model.findAll();
             if (monitors == null) {
-                return yield (0, resp_1.default)(204, "Not found monitors");
+                return yield (0, resp_1.default)(404, "Not found monitors");
             }
             return yield (0, resp_1.default)(200, monitors);
+        });
+    }
+    update(monitor, registration) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { status, message } = yield this.findByRegistration(registration);
+                if (message == null) {
+                    return yield (0, resp_1.default)(404, "Not found monitor with this register");
+                }
+                console.log(message);
+                const monitorOut = message;
+                monitorOut.update(monitor);
+                return yield (0, resp_1.default)(200, "Monitor updated");
+            }
+            catch (Error) {
+                throw Error;
+            }
         });
     }
 }

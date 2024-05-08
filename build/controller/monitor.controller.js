@@ -67,5 +67,19 @@ class MonitorController {
             }
         });
     }
+    update(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a;
+            const monitor = req.body;
+            const registration = (_a = req.query.registration) === null || _a === void 0 ? void 0 : _a.toString();
+            try {
+                const { status, message } = yield this.service.update(monitor, registration);
+                res.status(status).json(message);
+            }
+            catch (error) {
+                next(error);
+            }
+        });
+    }
 }
 exports.default = MonitorController;

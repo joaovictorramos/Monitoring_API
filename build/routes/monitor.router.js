@@ -11,4 +11,5 @@ monitorRouter.post("/monitor/create", control.create.bind(control));
 monitorRouter.get("/monitor/search/name/:name?", control.findByName.bind(control));
 monitorRouter.get("/monitor/search/registration/:registration?", control.findByRegistration.bind(control));
 monitorRouter.get("/monitor/searchAll", control.findAll.bind(control));
+monitorRouter.put("/monitor/update/:registration?", control.update.bind(control));
 exports.default = monitorRouter;

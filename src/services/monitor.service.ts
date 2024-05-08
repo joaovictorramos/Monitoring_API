@@ -7,7 +7,7 @@ class MonitorService{
 
     async create(monitor: Optional<any, string> | undefined){
         const monitorOut = await this.model.create(monitor)
-        if (monitorOut == null){
+        if (!monitorOut){
             return await resp(400, "Unable to register monitor")
         }
         return await resp(201, monitorOut)
@@ -19,8 +19,8 @@ class MonitorService{
                 name: name
             }
         })
-        if (monitorOut == null){
-            return await resp(204, "Not found monitor")
+        if (!monitorOut){
+            return await resp(404, "Not found monitor")
         }
         return await resp(200, monitorOut)
     }
@@ -31,18 +31,34 @@ class MonitorService{
                 registration: registration
             }
         })
-        if(monitorOut == null){
-            return await resp(204, "Not found monitor")
+        if(!monitorOut){
+            return await resp(404, "Not found monitor")
         }
         return await resp(200, monitorOut)
     }
 
     async findAll(){
         const monitors = await this.model.findAll()
-        if(monitors == null){
-            return await resp(204, "Not found monitors")
+        if(!monitors){
+            return await resp(404, "Not found monitors")
         }
         return await resp(200, monitors)
+    }
+
+    async update(monitor: any | undefined, registration: string | undefined){
+        try {
+            const { status, message } = await this.findByRegistration(registration)
+            
+            if(!message){
+                return await resp(404, "Not found monitor with this register")
+            }
+            console.log(message)
+            const monitorOut = message as Monitor
+            monitorOut.update(monitor)
+            return await resp(200, "Monitor updated")
+        } catch (Error) {
+            throw Error
+        } 
     }
 }
 

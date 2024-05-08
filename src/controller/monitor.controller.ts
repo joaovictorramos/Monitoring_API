@@ -43,6 +43,18 @@ class MonitorController{
             next(error)
         }
     }
+
+    async update(req: Request, res: Response, next: NextFunction){
+        const monitor = req.body
+        const registration = req.query.registration?.toString()
+
+        try {
+            const { status, message } = await this.service.update(monitor, registration)
+            res.status(status).json(message)
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 
 export default MonitorController
