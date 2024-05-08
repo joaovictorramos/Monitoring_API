@@ -18,13 +18,48 @@ class MonitorService {
     constructor() {
         this.model = Monitor_1.default;
     }
-    post(monitor) {
+    create(monitor) {
         return __awaiter(this, void 0, void 0, function* () {
             const monitorOut = yield this.model.create(monitor);
             if (monitorOut == null) {
-                return (0, resp_1.default)(400, "Unable to register monitor");
+                return yield (0, resp_1.default)(400, "Unable to register monitor");
             }
-            return (0, resp_1.default)(201, monitorOut);
+            return yield (0, resp_1.default)(201, monitorOut);
+        });
+    }
+    findByName(name) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const monitorOut = yield this.model.findOne({
+                where: {
+                    name: name
+                }
+            });
+            if (monitorOut == null) {
+                return yield (0, resp_1.default)(204, "Not found monitor");
+            }
+            return yield (0, resp_1.default)(200, monitorOut);
+        });
+    }
+    findByRegistration(registration) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const monitorOut = yield this.model.findOne({
+                where: {
+                    registration: registration
+                }
+            });
+            if (monitorOut == null) {
+                return yield (0, resp_1.default)(204, "Not found monitor");
+            }
+            return yield (0, resp_1.default)(200, monitorOut);
+        });
+    }
+    findAll() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const monitors = yield this.model.findAll();
+            if (monitors == null) {
+                return yield (0, resp_1.default)(204, "Not found monitors");
+            }
+            return yield (0, resp_1.default)(200, monitors);
         });
     }
 }

@@ -4,11 +4,40 @@ import MonitorService from "../services/monitor.service"
 class MonitorController{
     private service = new MonitorService()
 
-    async post(req: Request, res: Response, next: NextFunction){
-        console.log(req.body)
+    async create(req: Request, res: Response, next: NextFunction){
         const monitor = req.body
         try {
-            const { status, message } = await this.service.post(monitor)
+            const { status, message } = await this.service.create(monitor)
+            res.status(status).json(message)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async findByRegistration(req: Request, res: Response, next: NextFunction){
+        const registration = req.query.registration?.toString()
+        try {
+            const { status, message } = await this.service.findByRegistration(registration)
+            res.status(status).json(message)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async findByName(req: Request, res: Response, next: NextFunction){
+        const name = req.query.name?.toString()
+        console.log("name")
+        try {
+            const { status, message } = await this.service.findByName(name)
+            res.status(status).json(message)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async findAll(req: Request, res: Response, next: NextFunction){
+        try {
+            const {status, message} = await this.service.findAll()
             res.status(status).json(message)
         } catch (error) {
             next(error)

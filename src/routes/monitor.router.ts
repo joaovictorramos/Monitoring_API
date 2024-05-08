@@ -4,6 +4,9 @@ import MonitorController from "../controller/monitor.controller"
 const control = new MonitorController()
 const monitorRouter = Router()
 
-monitorRouter.post("/monitor/create", control.post.bind(control))
+monitorRouter.post("/monitor/create", control.create.bind(control))
+monitorRouter.get("/monitor/search/name/:name?", control.findByName.bind(control))
+monitorRouter.get("/monitor/search/registration/:registration?", control.findByRegistration.bind(control))
+monitorRouter.get("/monitor/searchAll", control.findAll.bind(control))
 
 export default monitorRouter

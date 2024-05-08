@@ -17,12 +17,49 @@ class MonitorController {
     constructor() {
         this.service = new monitor_service_1.default();
     }
-    post(req, res, next) {
+    create(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(req.body);
             const monitor = req.body;
             try {
-                const { status, message } = yield this.service.post(monitor);
+                const { status, message } = yield this.service.create(monitor);
+                res.status(status).json(message);
+            }
+            catch (error) {
+                next(error);
+            }
+        });
+    }
+    findByRegistration(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a;
+            const registration = (_a = req.query.registration) === null || _a === void 0 ? void 0 : _a.toString();
+            try {
+                const { status, message } = yield this.service.findByRegistration(registration);
+                res.status(status).json(message);
+            }
+            catch (error) {
+                next(error);
+            }
+        });
+    }
+    findByName(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a;
+            const name = (_a = req.query.name) === null || _a === void 0 ? void 0 : _a.toString();
+            console.log("name");
+            try {
+                const { status, message } = yield this.service.findByName(name);
+                res.status(status).json(message);
+            }
+            catch (error) {
+                next(error);
+            }
+        });
+    }
+    findAll(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { status, message } = yield this.service.findAll();
                 res.status(status).json(message);
             }
             catch (error) {

@@ -11,6 +11,7 @@ class Monitor extends sequelize_1.Model {
 }
 Monitor.init({
     id: {
+        unique: true,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
