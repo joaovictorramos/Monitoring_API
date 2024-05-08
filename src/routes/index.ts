@@ -1,8 +1,8 @@
 import { Router } from "express"
-import instituicaoRouter from "./instituicaoRouter"
+import monitorRouter from "./monitor.router"
 
 const router = Router()
 
-router.use(instituicaoRouter)
+router.use(monitorRouter)
 
 export default router

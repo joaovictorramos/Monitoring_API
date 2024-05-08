@@ -33,6 +33,12 @@
     npm install mysql2
 ```
 
+- Adicionando UUID
+```
+    npm install uuid
+    npm install @types/uuid
+```
+
 ## Executando o NodeJs
 
 - Descomentar em **tsconfig.json** (se não estiver dessa forma, edite)

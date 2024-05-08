@@ -2,7 +2,7 @@
 const config = {
     username: 'root',
     password: '',
-    database: 'instituicao',
+    database: 'monitoring',
     host: 'localhost',
     dialect: 'mysql'
 };
