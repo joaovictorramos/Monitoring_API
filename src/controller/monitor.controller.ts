@@ -55,6 +55,17 @@ class MonitorController{
             next(error)
         }
     }
+
+    async delete(req: Request, res: Response, next: NextFunction){
+        const registration = req.query.registration?.toString()
+
+        try {
+            const { status, message } = await this.service.delete(registration)
+            res.status(status).json(message)
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 
 export default MonitorController

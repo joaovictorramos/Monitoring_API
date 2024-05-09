@@ -21,7 +21,7 @@ class MonitorService {
     create(monitor) {
         return __awaiter(this, void 0, void 0, function* () {
             const monitorOut = yield this.model.create(monitor);
-            if (monitorOut == null) {
+            if (!monitorOut) {
                 return yield (0, resp_1.default)(400, "Unable to register monitor");
             }
             return yield (0, resp_1.default)(201, monitorOut);
@@ -34,7 +34,7 @@ class MonitorService {
                     name: name
                 }
             });
-            if (monitorOut == null) {
+            if (!monitorOut) {
                 return yield (0, resp_1.default)(404, "Not found monitor");
             }
             return yield (0, resp_1.default)(200, monitorOut);
@@ -47,7 +47,7 @@ class MonitorService {
                     registration: registration
                 }
             });
-            if (monitorOut == null) {
+            if (!monitorOut) {
                 return yield (0, resp_1.default)(404, "Not found monitor");
             }
             return yield (0, resp_1.default)(200, monitorOut);
@@ -56,7 +56,7 @@ class MonitorService {
     findAll() {
         return __awaiter(this, void 0, void 0, function* () {
             const monitors = yield this.model.findAll();
-            if (monitors == null) {
+            if (!monitors) {
                 return yield (0, resp_1.default)(404, "Not found monitors");
             }
             return yield (0, resp_1.default)(200, monitors);
@@ -66,16 +66,31 @@ class MonitorService {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { status, message } = yield this.findByRegistration(registration);
-                if (message == null) {
+                if (!message) {
                     return yield (0, resp_1.default)(404, "Not found monitor with this register");
                 }
-                console.log(message);
                 const monitorOut = message;
                 monitorOut.update(monitor);
                 return yield (0, resp_1.default)(200, "Monitor updated");
             }
-            catch (Error) {
-                throw Error;
+            catch (error) {
+                throw error;
+            }
+        });
+    }
+    delete(registration) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { status, message } = yield this.findByRegistration(registration);
+                if (!message) {
+                    return yield (0, resp_1.default)(404, "Not found monitor with this register");
+                }
+                const monitorOut = message;
+                monitorOut.destroy();
+                return yield (0, resp_1.default)(200, "Monitor deleted");
+            }
+            catch (error) {
+                throw error;
             }
         });
     }

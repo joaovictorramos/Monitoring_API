@@ -52,13 +52,26 @@ class MonitorService{
             if(!message){
                 return await resp(404, "Not found monitor with this register")
             }
-            console.log(message)
             const monitorOut = message as Monitor
             monitorOut.update(monitor)
             return await resp(200, "Monitor updated")
-        } catch (Error) {
-            throw Error
+        } catch (error) {
+            throw error
         } 
+    }
+
+    async delete(registration: string | undefined){
+        try {
+            const { status, message } = await this.findByRegistration(registration)
+            if(!message){
+                return await resp(404, "Not found monitor with this register")
+            }
+            const monitorOut = message as Monitor
+            monitorOut.destroy()
+            return await resp(200, "Monitor deleted")
+        } catch (error) {
+            throw error
+        }
     }
 }
 
